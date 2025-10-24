@@ -1,0 +1,82 @@
+---
+import { getBacklinks, getContentUrl } from '../lib/content-utils';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const backlinks = await getBacklinks(slug);
+---
+
+{
+  backlinks.length > 0 && (
+    <aside class="backlinks">
+      <h2>Linked from</h2>
+      <ul class="backlinks-list">
+        {backlinks.map((entry) => (
+          <li>
+            <a href={getContentUrl(entry)}>
+              <span class="backlink-title">{entry.data.title}</span>
+              <span class="backlink-meta">
+                {entry.collection} · {entry.data.growth}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )
+}
+
+<style>
+  .backlinks {
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .backlinks h2 {
+    font-size: var(--text-lg);
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+  }
+
+  .backlinks-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .backlinks-list li {
+    margin: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .backlinks-list li:last-child {
+    border-bottom: none;
+  }
+
+  .backlinks-list a {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3) 0;
+    color: var(--color-text);
+    text-decoration: none;
+    gap: var(--space-1);
+  }
+
+  .backlinks-list a:hover .backlink-title {
+    color: var(--color-accent);
+  }
+
+  .backlink-title {
+    transition: color var(--transition-base);
+  }
+
+  .backlink-meta {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: capitalize;
+  }
+</style>

@@ -1,16 +1,203 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
+// Get recent content
+const allContent = await Promise.all([
+  getCollection('notes'),
+  getCollection('projects'),
+  getCollection('journals'),
+  getCollection('photography'),
+  getCollection('collections'),
+]).then((collections) => collections.flat());
+
+// Sort by updated date and take the 5 most recent
+const recentContent = allContent
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime())
+  .slice(0, 5);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home">
+  <div class="home">
+    <section class="hero">
+      <h1>Welcome to my digital garden</h1>
+      <p class="lead">
+        This is a space where I cultivate ideas, document projects, share
+        photography, and collect things I find interesting. Like a garden, some
+        thoughts are just seeds 🌱, others are growing 🌿, and some have
+        matured into evergreen content 🌳.
+      </p>
+    </section>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>
+        I'm a product manager by day, tinkerer by night. My interests span
+        photography (especially travel and astrophotography), 3D printing,
+        software development, motorcycling, and board gaming. This site is a
+        public space for my notes, thoughts, projects, and collections.
+      </p>
+    </section>
+
+    <section class="recent">
+      <h2>Recently Updated</h2>
+      {
+        recentContent.length > 0 ? (
+          <ul class="content-list">
+            {recentContent.map((entry) => {
+              const collection = entry.collection;
+              const slug = entry.slug;
+              return (
+                <li>
+                  <a href={`/${collection}/${slug}`}>
+                    <span class="content-title">{entry.data.title}</span>
+                    <span class="content-date">
+                      {entry.data.updated.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p class="text-muted">No content yet. Start creating!</p>
+        )
+      }
+    </section>
+
+    <section class="explore">
+      <h2>Explore</h2>
+      <div class="explore-grid">
+        <a href="/notes" class="explore-card">
+          <h3>Notes</h3>
+          <p>Thoughts and ideas at various stages of development</p>
+        </a>
+        <a href="/projects" class="explore-card">
+          <h3>Projects</h3>
+          <p>Portfolio of things I've built and designed</p>
+        </a>
+        <a href="/journals" class="explore-card">
+          <h3>Journals</h3>
+          <p>Development diaries and project logs</p>
+        </a>
+        <a href="/photography" class="explore-card">
+          <h3>Photography</h3>
+          <p>Photo essays and galleries from my travels</p>
+        </a>
+        <a href="/collections" class="explore-card">
+          <h3>Collections</h3>
+          <p>Curated lists and links on topics I care about</p>
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .home {
+    max-width: var(--measure-wide);
+  }
+
+  .hero {
+    margin-bottom: var(--space-12);
+  }
+
+  .hero h1 {
+    margin-top: 0;
+    margin-bottom: var(--space-5);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-muted);
+    max-width: var(--measure);
+  }
+
+  section {
+    margin-bottom: var(--space-10);
+  }
+
+  section h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-5);
+  }
+
+  .content-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .content-list li {
+    margin: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .content-list li:last-child {
+    border-bottom: none;
+  }
+
+  .content-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: var(--space-3) 0;
+    color: var(--color-text);
+    text-decoration: none;
+    gap: var(--space-4);
+  }
+
+  .content-list a:hover .content-title {
+    color: var(--color-accent);
+  }
+
+  .content-title {
+    flex: 1;
+    transition: color var(--transition-base);
+  }
+
+  .content-date {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .explore-card {
+    padding: var(--space-5);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .explore-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .explore-card h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+    font-size: var(--text-lg);
+  }
+
+  .explore-card p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

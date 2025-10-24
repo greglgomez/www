@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import Backlinks from '../../components/Backlinks.astro';
+
+export async function getStaticPaths() {
+  const photography = await getCollection('photography');
+  return photography.map((photo) => ({
+    params: { slug: photo.slug },
+    props: { photo },
+  }));
+}
+
+const { photo } = Astro.props;
+const { Content } = await photo.render();
+---
+
+<ContentLayout entry={photo}>
+  <Content />
+  <Backlinks slug={photo.slug} />
+</ContentLayout>

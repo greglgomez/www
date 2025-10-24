@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import Backlinks from '../../components/Backlinks.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+---
+
+<ContentLayout entry={note}>
+  <Content />
+  <Backlinks slug={note.slug} />
+</ContentLayout>
+
+<style is:global>
+  /* Wikilink styling */
+  .wikilink {
+    color: var(--color-link);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--color-border);
+    transition: border-color var(--transition-base);
+  }
+
+  .wikilink:hover {
+    color: var(--color-link-hover);
+    border-bottom-color: var(--color-link-hover);
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import Backlinks from '../../components/Backlinks.astro';
+
+export async function getStaticPaths() {
+  const collections = await getCollection('collections');
+  return collections.map((collection) => ({
+    params: { slug: collection.slug },
+    props: { collection },
+  }));
+}
+
+const { collection } = Astro.props;
+const { Content } = await collection.render();
+---
+
+<ContentLayout entry={collection}>
+  <Content />
+  <Backlinks slug={collection.slug} />
+</ContentLayout>

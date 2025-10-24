@@ -1,0 +1,170 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navSections = [
+  {
+    title: 'Content',
+    links: [
+      { label: 'Home', href: '/' },
+      { label: 'Notes', href: '/notes' },
+      { label: 'Projects', href: '/projects' },
+      { label: 'Journals', href: '/journals' },
+      { label: 'Photography', href: '/photography' },
+      { label: 'Collections', href: '/collections' },
+    ],
+  },
+  {
+    title: 'Topics',
+    links: [
+      { label: 'Photography', href: '/topics/photography' },
+      { label: 'Product Management', href: '/topics/product-management' },
+      { label: 'Development', href: '/topics/development' },
+      { label: '3D Printing', href: '/topics/3d-printing' },
+      { label: 'Motorcycling', href: '/topics/motorcycling' },
+      { label: 'Board Gaming', href: '/topics/board-gaming' },
+    ],
+  },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="/" class="site-title">Greg L. Gomez</a>
+    <p class="site-description">Digital Garden</p>
+  </div>
+
+  <nav class="sidebar-nav" aria-label="Main navigation">
+    {
+      navSections.map((section) => (
+        <div class="nav-section">
+          <h3 class="nav-section-title">{section.title}</h3>
+          <ul class="nav-list">
+            {section.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={['nav-link', { active: currentPath === link.href }]}
+                  aria-current={currentPath === link.href ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    <ThemeToggle />
+  </div>
+</aside>
+
+<style>
+  .sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: var(--space-6);
+  }
+
+  .sidebar-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .site-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .site-title:hover {
+    color: var(--color-accent);
+  }
+
+  .site-description {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+  }
+
+  .nav-section {
+    margin-bottom: var(--space-6);
+  }
+
+  .nav-section-title {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-list li {
+    margin: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    transition: background-color var(--transition-base),
+      color var(--transition-base);
+  }
+
+  .nav-link:hover {
+    background-color: var(--color-bg);
+    color: var(--color-accent);
+  }
+
+  .nav-link.active {
+    background-color: var(--color-accent);
+    color: white;
+  }
+
+  .sidebar-footer {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+</style>

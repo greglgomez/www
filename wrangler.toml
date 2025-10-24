@@ -1,0 +1,16 @@
+# Cloudflare Pages configuration
+name = "digital-garden"
+compatibility_date = "2025-10-24"
+
+[build]
+command = "npm run build"
+cwd = "."
+watch_dirs = ["src"]
+
+[build.upload]
+format = "service-worker"
+dir = "./dist"
+
+[[build.upload.rules]]
+type = "Text"
+globs = ["**/*.html", "**/*.css", "**/*.js", "**/*.json", "**/*.xml", "**/*.txt"]
