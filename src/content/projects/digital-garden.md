@@ -26,7 +26,7 @@ Traditional blogs didn't fit this model - they're too linear, too polished, too 
 
 ## Technical Approach
 
-Built with [[welcome|Astro]] for maximum performance and flexibility:
+Built with [[welcome|Astro]] for performance and flexibility:
 
 - **Zero JavaScript by default** - Progressive enhancement where needed
 - **Content collections** - Type-safe, organized content management

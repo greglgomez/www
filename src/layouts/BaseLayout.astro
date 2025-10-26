@@ -27,6 +27,25 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       href="https://fonts.googleapis.com"
       crossorigin="anonymous"
     />
+
+    <!-- Prevent flash of unstyled content (FOUC) for dark mode -->
+    <script is:inline>
+      // This runs BEFORE the page renders to prevent flash
+      (function() {
+        const getTheme = () => {
+          if (typeof localStorage !== 'undefined') {
+            const stored = localStorage.getItem('theme');
+            if (stored) return stored;
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+        };
+
+        const theme = getTheme();
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>

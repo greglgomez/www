@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import GrowthBadge from '../../components/GrowthBadge.astro';
+
+const projects = await getCollection('projects');
+const sortedProjects = projects
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime());
+---
+
+<BaseLayout title="Projects">
+  <div class="page">
+    <header class="page-header">
+      <h1>Projects</h1>
+      <p class="page-description">
+        Things I've built, designed, and worked on across development, 3D
+        printing, and product management.
+      </p>
+    </header>
+
+    {
+      sortedProjects.length > 0 ? (
+        <ul class="content-list">
+          {sortedProjects.map((project) => (
+            <li>
+              <a href={`/projects/${project.slug}`}>
+                <div class="content-item">
+                  <div class="content-header">
+                    <h2 class="content-title">{project.data.title}</h2>
+                    <GrowthBadge growth={project.data.growth} />
+                  </div>
+                  <div class="content-meta">
+                    <span class="category">{project.data.category}</span>
+                    <span class="separator">·</span>
+                    <time datetime={project.data.updated.toISOString()}>
+                      {project.data.updated.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </time>
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty-state">
+          No projects yet. Create your first project in{' '}
+          <code>src/content/projects/</code>
+        </p>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: var(--measure-wide);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-header h1 {
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+
+  .page-description {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .content-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .content-list li {
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .content-list a {
+    display: block;
+    padding: var(--space-4);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .content-list a:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .content-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .content-title {
+    flex: 1;
+    font-size: var(--text-xl);
+    margin: 0;
+    transition: color var(--transition-base);
+  }
+
+  .content-list a:hover .content-title {
+    color: var(--color-accent);
+  }
+
+  .content-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .category {
+    text-transform: capitalize;
+  }
+
+  .separator {
+    opacity: 0.5;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: var(--space-10);
+    color: var(--color-text-muted);
+  }
+
+  .empty-state code {
+    background-color: var(--color-code-bg);
+    padding: 0.25em 0.5em;
+    border-radius: var(--radius-sm);
+  }
+</style>

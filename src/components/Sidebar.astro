@@ -1,28 +1,29 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import { getCollectionCounts } from '../lib/collection-counts';
+
+const counts = await getCollectionCounts();
+
+const allLinks = [
+  { label: 'Home', href: '/', collection: null }, // Always show
+  { label: 'Notes', href: '/notes', collection: 'notes' },
+  { label: 'Projects', href: '/projects', collection: 'projects' },
+  { label: 'Journals', href: '/journals', collection: 'journals' },
+  { label: 'Photography', href: '/photography', collection: 'photography' },
+  { label: 'Collections', href: '/collections', collection: 'collections' },
+];
+
+// Filter to only show links for collections with content
+const visibleLinks = allLinks.filter(
+  (link) =>
+    link.collection === null || // Always show Home
+    counts[link.collection as keyof typeof counts] > 0 // Show if has content
+);
 
 const navSections = [
   {
     title: 'Content',
-    links: [
-      { label: 'Home', href: '/' },
-      { label: 'Notes', href: '/notes' },
-      { label: 'Projects', href: '/projects' },
-      { label: 'Journals', href: '/journals' },
-      { label: 'Photography', href: '/photography' },
-      { label: 'Collections', href: '/collections' },
-    ],
-  },
-  {
-    title: 'Topics',
-    links: [
-      { label: 'Photography', href: '/topics/photography' },
-      { label: 'Product Management', href: '/topics/product-management' },
-      { label: 'Development', href: '/topics/development' },
-      { label: '3D Printing', href: '/topics/3d-printing' },
-      { label: 'Motorcycling', href: '/topics/motorcycling' },
-      { label: 'Board Gaming', href: '/topics/board-gaming' },
-    ],
+    links: visibleLinks,
   },
 ];
 

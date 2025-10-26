@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { getCollectionCounts } from '../lib/collection-counts';
 
 // Get recent content
 const allContent = await Promise.all([
@@ -16,6 +17,48 @@ const recentContent = allContent
   .filter((entry) => !entry.data.draft)
   .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime())
   .slice(0, 5);
+
+// Get collection counts for conditional rendering
+const counts = await getCollectionCounts();
+
+// Define all explore cards
+const allExploreCards = [
+  {
+    title: 'Notes',
+    href: '/notes',
+    description: 'Thoughts and ideas at various stages of development',
+    collection: 'notes' as const,
+  },
+  {
+    title: 'Projects',
+    href: '/projects',
+    description: "Portfolio of things I've built and designed",
+    collection: 'projects' as const,
+  },
+  {
+    title: 'Journals',
+    href: '/journals',
+    description: 'Development diaries and project logs',
+    collection: 'journals' as const,
+  },
+  {
+    title: 'Photography',
+    href: '/photography',
+    description: 'Photo essays and galleries from my travels',
+    collection: 'photography' as const,
+  },
+  {
+    title: 'Collections',
+    href: '/collections',
+    description: 'Curated lists and links on topics I care about',
+    collection: 'collections' as const,
+  },
+];
+
+// Filter to only show cards for collections with content
+const visibleExploreCards = allExploreCards.filter(
+  (card) => counts[card.collection] > 0
+);
 ---
 
 <BaseLayout title="Home">
@@ -25,18 +68,15 @@ const recentContent = allContent
       <p class="lead">
         This is a space where I cultivate ideas, document projects, share
         photography, and collect things I find interesting. Like a garden, some
-        thoughts are just seeds 🌱, others are growing 🌿, and some have
-        matured into evergreen content 🌳.
+        thoughts are just seeds 🌱, others are growing 🌿, and some will eventually
+        mature into evergreen content 🌳.
       </p>
     </section>
 
     <section class="about">
       <h2>About</h2>
       <p>
-        I'm a product manager by day, tinkerer by night. My interests span
-        photography (especially travel and astrophotography), 3D printing,
-        software development, motorcycling, and board gaming. This site is a
-        public space for my notes, thoughts, projects, and collections.
+        I'm a product manager by trade, with over 12 years experience working in digital delivery with roles spanning Project Management, User Experience Design, Design Thinking and Product Management. Outside of work, my interests span: photography (mainly travel and astro), 3D printing, software development, and board gaming.
       </p>
     </section>
 
@@ -70,31 +110,21 @@ const recentContent = allContent
       }
     </section>
 
-    <section class="explore">
-      <h2>Explore</h2>
-      <div class="explore-grid">
-        <a href="/notes" class="explore-card">
-          <h3>Notes</h3>
-          <p>Thoughts and ideas at various stages of development</p>
-        </a>
-        <a href="/projects" class="explore-card">
-          <h3>Projects</h3>
-          <p>Portfolio of things I've built and designed</p>
-        </a>
-        <a href="/journals" class="explore-card">
-          <h3>Journals</h3>
-          <p>Development diaries and project logs</p>
-        </a>
-        <a href="/photography" class="explore-card">
-          <h3>Photography</h3>
-          <p>Photo essays and galleries from my travels</p>
-        </a>
-        <a href="/collections" class="explore-card">
-          <h3>Collections</h3>
-          <p>Curated lists and links on topics I care about</p>
-        </a>
-      </div>
-    </section>
+    {
+      visibleExploreCards.length > 0 && (
+        <section class="explore">
+          <h2>Explore</h2>
+          <div class="explore-grid">
+            {visibleExploreCards.map((card) => (
+              <a href={card.href} class="explore-card">
+                <h3>{card.title}</h3>
+                <p>{card.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>
 

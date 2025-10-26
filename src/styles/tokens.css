@@ -98,8 +98,4 @@
   --color-evergreen: #10b981;
 }
 
-/* Ensure smooth color transitions when switching themes */
-* {
-  transition: background-color var(--transition-base),
-    border-color var(--transition-base), color var(--transition-base);
-}
+/* Note: No global color transitions to prevent FOUC on page navigation */
