@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "collections/public-sector-product-links.md",
+                "file": "notes/product-ramblings-backlog.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "public-sector-product-links"
+              "title": "product-ramblings-backlog"
             }
           }
         ]
@@ -94,7 +94,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "collections/public-sector-product-links.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for public-sector-product-links"
+              "title": "Backlinks"
             }
           },
           {
@@ -113,12 +112,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "collections/public-sector-product-links.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from public-sector-product-links"
+              "title": "Outgoing links"
             }
           },
           {
@@ -169,8 +167,14 @@
       "bases:Create new base": false
     }
   },
-  "active": "718da7aa1fab3041",
+  "active": "4f5fe1c07eca62ee",
   "lastOpenFiles": [
+    "templates/resource.md",
+    "templates/essay.md",
+    "resources/public-sector-product-links.md",
+    "resources",
+    "essays/hello-world.md",
+    "essays",
     "photography/funghi-photos.md",
     "photography/funghi-photos.mdx",
     "photography/funghi.md",

@@ -1,5 +1,5 @@
 ---
-import Sidebar from '../components/Sidebar.astro';
+import TopNav from '../components/TopNav.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'Digital garden of Greg L. Gomez' } = Astro.props;
+const { title, description = '@greglgomez - Product manager exploring the future' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -19,7 +19,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonicalURL} />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | Greg L. Gomez</title>
+    <title>{title === '@greglgomez' ? title : `${title} | @greglgomez`}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Preload fonts for better performance -->
     <link
@@ -50,35 +53,23 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div class="layout">
-      <Sidebar />
+    <TopNav />
 
-      <main id="main-content" class="main-content">
-        <slot />
-      </main>
-    </div>
+    <main id="main-content" class="main-content">
+      <slot />
+    </main>
 
     <style>
-      .layout {
-        display: flex;
-        min-height: 100vh;
-      }
-
       .main-content {
-        flex: 1;
-        margin-left: var(--sidebar-width);
+        max-width: 1400px;
+        margin: 0 auto;
         padding: var(--space-8) var(--space-10);
-        max-width: calc(var(--measure-wide) + var(--space-10) * 2);
+        min-height: calc(100vh - 80px);
       }
 
       /* Mobile layout */
       @media (max-width: 768px) {
-        .layout {
-          flex-direction: column;
-        }
-
         .main-content {
-          margin-left: 0;
           padding: var(--space-6) var(--space-4);
         }
       }

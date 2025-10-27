@@ -3,21 +3,21 @@ title: "{{title}}"
 created: {{date:YYYY-MM-DD}}
 updated: {{date:YYYY-MM-DD}}
 growth: seedling
-type: journal
+type: essay
 ---
 
 # {{title}}
 
-Development diary for [[project-name]].
+Your essay content here...
 
-## What I worked on
-
--
-
-## Progress
+## Introduction
 
 -
 
-## Next steps
+## Main Points
+
+-
+
+## Conclusion
 
 -

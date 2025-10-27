@@ -3,29 +3,26 @@ import { getCollection } from 'astro:content';
 export interface CollectionCounts {
   notes: number;
   projects: number;
-  journals: number;
-  photography: number;
-  collections: number;
+  essays: number;
+  resources: number;
 }
 
 /**
  * Get the count of published (non-draft) items in each collection
  */
 export async function getCollectionCounts(): Promise<CollectionCounts> {
-  const [notes, projects, journals, photography, collections] =
+  const [notes, projects, essays, resources] =
     await Promise.all([
       getCollection('notes'),
       getCollection('projects'),
-      getCollection('journals'),
-      getCollection('photography'),
-      getCollection('collections'),
+      getCollection('essays'),
+      getCollection('resources'),
     ]);
 
   return {
     notes: notes.filter((item) => !item.data.draft).length,
     projects: projects.filter((item) => !item.data.draft).length,
-    journals: journals.filter((item) => !item.data.draft).length,
-    photography: photography.filter((item) => !item.data.draft).length,
-    collections: collections.filter((item) => !item.data.draft).length,
+    essays: essays.filter((item) => !item.data.draft).length,
+    resources: resources.filter((item) => !item.data.draft).length,
   };
 }

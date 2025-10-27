@@ -23,31 +23,23 @@ const projectsCollection = defineCollection({
   }),
 });
 
-const journalsCollection = defineCollection({
+const essaysCollection = defineCollection({
   type: 'content',
   schema: baseSchema.extend({
-    type: z.literal('journal'),
+    type: z.literal('essay'),
   }),
 });
 
-const photographyCollection = defineCollection({
+const resourcesCollection = defineCollection({
   type: 'content',
   schema: baseSchema.extend({
-    type: z.literal('photo-essay'),
-  }),
-});
-
-const collectionsCollection = defineCollection({
-  type: 'content',
-  schema: baseSchema.extend({
-    type: z.literal('collection'),
+    type: z.literal('resource'),
   }),
 });
 
 export const collections = {
   notes: notesCollection,
   projects: projectsCollection,
-  journals: journalsCollection,
-  photography: photographyCollection,
-  collections: collectionsCollection,
+  essays: essaysCollection,
+  resources: resourcesCollection,
 };

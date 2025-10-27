@@ -1,0 +1,236 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Role {
+  title: string;
+  company: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+}
+
+const roles: Role[] = [
+  {
+    title: 'Product Manager',
+    company: 'Met Office',
+    startDate: '2025',
+    endDate: 'Present',
+    description: 'Managing Upper Air Observation networks and data products to help the UK public make better decisions to live and work safely.',
+  },
+  {
+    title: 'Head of Product',
+    company: '3 Sided Cube',
+    startDate: '2024',
+    endDate: '2025',
+    description: 'Coaching and mentoring a team of product managers to develop and execute product strategies, whilst supporting on commercial activities and leading discovery workshops.',
+  },
+  {
+    title: 'Senior Product Manager',
+    company: '3 Sided Cube',
+    startDate: '2023',
+    endDate: '2024',
+    description: 'Managing a portfolio of B2C products, from discovery through design, build and into continuous improvement.',
+  },
+  {
+    title: 'User Experience Designer',
+    company: '3 Sided Cube',
+    startDate: '2021',
+    endDate: '2023',
+    description: 'Designing and delivering discovery activities to validate value propositions, user journeys and information architecture.',
+  },
+  {
+    title: 'Freelance Project Manager',
+    company: '@greglgomez',
+    startDate: '2018',
+    endDate: '2021',
+    description: 'Freelance project management contractor supporting teams to deliver web, app and API projects.',
+  },
+  {
+    title: 'Solutions Strategist',
+    company: '3 Sided Cube',
+    startDate: '2017',
+    endDate: '2018',
+    description: 'Commercial role identifying opportunities with existing clients and tending to the new client pipeline.',
+  },
+  {
+    title: 'Project Manager',
+    company: '3 Sided Cube',
+    startDate: '2015',
+    endDate: '2017',
+    description: 'Responsible for planning, resourcing and managing timelines and budgets for web, app and API projects.',
+  },
+];
+---
+
+<BaseLayout title="About" description="About Greg L. Gomez - Product Manager">
+  <div class="about">
+    <section class="intro">
+      <h1>About Me</h1>
+      <p class="lead">
+        I'm a product manager with over 12 years of experience in digital delivery, spanning project management, user experience, design thinking, and product management. I'm particularly passionate about tech for good, frontier technologies, and AI.
+      </p>
+      <p class="lead">
+        Outside of work, I enjoy 3D printing, software development, and board gaming.
+      </p>
+    </section>
+
+    <section class="experience">
+      <h2>Experience</h2>
+      <div class="timeline">
+        {roles.map((role) => (
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="role-header">
+                <h3 class="role-title">{role.title}</h3>
+                <div class="role-meta">
+                  <span class="company">{role.company}</span>
+                  <span class="date-range">
+                    {role.startDate} - {role.endDate}
+                  </span>
+                </div>
+              </div>
+              <p class="role-description">{role.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: var(--measure-wide);
+    margin: 0 auto;
+  }
+
+  .intro {
+    margin-bottom: var(--space-12);
+  }
+
+  .intro h1 {
+    margin-top: 0;
+    margin-bottom: var(--space-6);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-muted);
+    max-width: var(--measure);
+  }
+
+  .experience h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-8);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: var(--space-8);
+  }
+
+  /* Timeline line */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: var(--space-10);
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: calc(-1 * var(--space-8));
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    border: 2px solid var(--color-bg);
+    transform: translateX(-5px);
+    z-index: 1;
+  }
+
+  .timeline-content {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    transition: box-shadow var(--transition-base);
+  }
+
+  .timeline-content:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .role-header {
+    margin-bottom: var(--space-4);
+  }
+
+  .role-title {
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+  }
+
+  .role-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--text-base);
+  }
+
+  .company {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .date-range {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .role-description {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (max-width: 768px) {
+    .timeline {
+      padding-left: var(--space-6);
+    }
+
+    .timeline-marker {
+      left: calc(-1 * var(--space-6));
+      width: 10px;
+      height: 10px;
+      transform: translateX(-4px);
+    }
+
+    .timeline-content {
+      padding: var(--space-4);
+    }
+
+    .role-title {
+      font-size: var(--text-xl);
+    }
+
+    .role-meta {
+      font-size: var(--text-sm);
+    }
+  }
+</style>

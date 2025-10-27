@@ -3,7 +3,6 @@
 ---
 
 <button
-  id="theme-toggle"
   type="button"
   aria-label="Toggle dark mode"
   class="theme-toggle"
@@ -35,15 +34,15 @@
     }
   };
 
-  // Toggle theme on button click
-  const toggle = document.getElementById('theme-toggle');
-  if (toggle) {
+  // Toggle theme on button click - handle all theme toggle buttons
+  const toggles = document.querySelectorAll('.theme-toggle');
+  toggles.forEach((toggle) => {
     toggle.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
       setTheme(next);
     });
-  }
+  });
 </script>
 
 <style is:global>

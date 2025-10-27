@@ -3,24 +3,22 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 type ContentEntry =
   | CollectionEntry<'notes'>
   | CollectionEntry<'projects'>
-  | CollectionEntry<'journals'>
-  | CollectionEntry<'photography'>
-  | CollectionEntry<'collections'>;
+  | CollectionEntry<'essays'>
+  | CollectionEntry<'resources'>;
 
 /**
  * Get all content entries from all collections
  */
 export async function getAllContent(): Promise<ContentEntry[]> {
-  const [notes, projects, journals, photography, collections] =
+  const [notes, projects, essays, resources] =
     await Promise.all([
       getCollection('notes'),
       getCollection('projects'),
-      getCollection('journals'),
-      getCollection('photography'),
-      getCollection('collections'),
+      getCollection('essays'),
+      getCollection('resources'),
     ]);
 
-  return [...notes, ...projects, ...journals, ...photography, ...collections];
+  return [...notes, ...projects, ...essays, ...resources];
 }
 
 /**

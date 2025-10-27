@@ -1,0 +1,94 @@
+---
+import GrowthBadge from './GrowthBadge.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  growth: 'seedling' | 'budding' | 'evergreen';
+  date: Date;
+  additionalMeta?: string;
+  collection?: string;
+}
+
+const { href, title, growth, date, additionalMeta, collection } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<li class="content-item" data-collection={collection}>
+  <a href={href}>
+    <div class="content-item-inner">
+      <div class="content-header">
+        <span class="content-title">{title}</span>
+        <GrowthBadge growth={growth} />
+      </div>
+      <div class="content-meta">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {additionalMeta && (
+          <>
+            <span class="separator">·</span>
+            <span>{additionalMeta}</span>
+          </>
+        )}
+      </div>
+    </div>
+  </a>
+</li>
+
+<style>
+  li {
+    margin: 0;
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  li:last-child {
+    border-bottom: none;
+  }
+
+  a {
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  a:hover .content-title {
+    color: var(--color-accent);
+  }
+
+  .content-item-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .content-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .content-title {
+    flex: 1;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    transition: color var(--transition-base);
+  }
+
+  .content-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .separator {
+    opacity: 0.5;
+  }
+</style>

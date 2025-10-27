@@ -6,9 +6,8 @@ These templates help you quickly create new content with the correct frontmatter
 
 - **note.md** - For thoughts, ideas, and learning notes
 - **project.md** - For portfolio entries and completed work
-- **journal.md** - For development diaries and progress logs
-- **photo-essay.md** - For photography with galleries
-- **collection.md** - For curated lists and resources
+- **essay.md** - For long-form writing and opinion pieces
+- **resource.md** - For curated lists and resource collections
 
 ## How to Use Templates in Obsidian
 
@@ -45,10 +44,8 @@ After inserting a template:
    - `seedling` - New, rough ideas
    - `budding` - Developing content
    - `evergreen` - Polished, mature content
-4. **Add topics**: `[photography, travel]`
+4. **Add topics**: `[development, typescript]`
 5. **For projects**: Update `category` (dev, 3d-printing, or product)
-6. **For journals**: Set `project` name and `entry` number
-7. **For photo-essays**: Set `category` (travel, astro, or general)
 
 ### 4. Save to Correct Folder
 
@@ -56,9 +53,8 @@ Make sure to save your note in the right collection folder:
 
 - Notes → `notes/`
 - Projects → `projects/`
-- Journals → `journals/`
-- Photo essays → `photography/`
-- Collections → `collections/`
+- Essays → `essays/`
+- Resources → `resources/`
 
 ## Template Variables
 
@@ -113,11 +109,6 @@ Obsidian supports these variables in templates:
 - `dev` - Software/web development
 - `3d-printing` - 3D modeling and printing
 - `product` - Product management work
-
-### Photo Categories
-- `travel` - Travel photography
-- `astro` - Astrophotography
-- `general` - Everything else
 
 ## Need Help?
 

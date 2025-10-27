@@ -7,9 +7,8 @@ interface Props {
   entry:
     | CollectionEntry<'notes'>
     | CollectionEntry<'projects'>
-    | CollectionEntry<'journals'>
-    | CollectionEntry<'photography'>
-    | CollectionEntry<'collections'>;
+    | CollectionEntry<'essays'>
+    | CollectionEntry<'resources'>;
 }
 
 const { entry } = Astro.props;
@@ -55,7 +54,7 @@ const showUpdated = created.getTime() !== updated.getTime();
       </div>
     </header>
 
-    <div class="content-body">
+    <div class="content-body prose prose-lg lg:prose-xl dark:prose-invert max-w-none">
       <slot />
     </div>
   </article>

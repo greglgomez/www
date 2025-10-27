@@ -41,9 +41,6 @@
   --measure-narrow: 45ch;
   --measure-wide: 85ch;
 
-  /* Sidebar */
-  --sidebar-width: 280px;
-
   /* Border Radius */
   --radius-sm: 0.125rem; /* 2px */
   --radius-md: 0.25rem; /* 4px */
@@ -56,15 +53,15 @@
 
 /* Light Mode Colors */
 :root {
-  --color-bg: #ffffff;
-  --color-surface: #f8f9fa;
-  --color-text: #1a1a1a;
+  --color-bg: #fffff8; /* Tufte-inspired off-white for reduced eye strain */
+  --color-surface: #fffffb; /* Slightly darker off-white for surfaces */
+  --color-text: #111111; /* Tufte-inspired off-black */
   --color-text-muted: #666666;
   --color-border: #e0e0e0;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-link: #2563eb;
-  --color-link-hover: #1d4ed8;
+  --color-accent: #805ad5; /* Crystal ball purple 🔮 */
+  --color-accent-hover: #6b46c1;
+  --color-link: #805ad5;
+  --color-link-hover: #6b46c1;
   --color-code-bg: #f5f5f5;
   --color-success: #059669;
   --color-warning: #d97706;
@@ -83,10 +80,10 @@
   --color-text: #e5e5e5;
   --color-text-muted: #a3a3a3;
   --color-border: #333333;
-  --color-accent: #60a5fa;
-  --color-accent-hover: #93c5fd;
-  --color-link: #60a5fa;
-  --color-link-hover: #93c5fd;
+  --color-accent: #b794f6; /* Crystal ball purple (light) 🔮 */
+  --color-accent-hover: #d6bcfa;
+  --color-link: #b794f6;
+  --color-link-hover: #d6bcfa;
   --color-code-bg: #1e1e1e;
   --color-success: #10b981;
   --color-warning: #f59e0b;

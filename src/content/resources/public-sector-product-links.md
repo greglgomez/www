@@ -3,7 +3,7 @@ title: Resources for Product Managers in the Public Sector
 created: 2025-10-26
 updated: 2025-10-26
 growth: seedling
-type: collection
+type: resource
 ---
 ## Links
 

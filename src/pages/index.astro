@@ -1,87 +1,98 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import GrowthBadge from '../components/GrowthBadge.astro';
+import ContentListItem from '../components/ContentListItem.astro';
 
-// Get recent content
+// Get all content
 const allContent = await Promise.all([
   getCollection('notes'),
   getCollection('projects'),
-  getCollection('journals'),
-  getCollection('photography'),
-  getCollection('collections'),
+  getCollection('essays'),
+  getCollection('resources'),
 ]).then((collections) => collections.flat());
 
-// Sort by updated date and take the 5 most recent
-const recentContent = allContent
+// Filter out drafts and sort by updated date
+const publishedContent = allContent
   .filter((entry) => !entry.data.draft)
-  .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime())
-  .slice(0, 5);
+  .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime());
 
 // Helper function to get collection display name
 function getCollectionDisplayName(collection: string): string {
   const names: Record<string, string> = {
     notes: 'Note',
     projects: 'Project',
-    journals: 'Journal',
-    photography: 'Photo Essay',
-    collections: 'Collection',
+    essays: 'Essay',
+    resources: 'Resource',
   };
   return names[collection] || collection;
 }
+
+// Get collection type counts for the filter
+const collectionCounts = {
+  all: publishedContent.length,
+  notes: publishedContent.filter(e => e.collection === 'notes').length,
+  projects: publishedContent.filter(e => e.collection === 'projects').length,
+  essays: publishedContent.filter(e => e.collection === 'essays').length,
+  resources: publishedContent.filter(e => e.collection === 'resources').length,
+};
 ---
 
-<BaseLayout title="Home">
-  <div class="home">
+<BaseLayout title="The Garden">
+  <div class="garden">
     <section class="hero">
-      <h1>Welcome to my digital garden</h1>
+      <h1><strong>Greg</strong> writes about product, design thinking and the future.</h1>
       <p class="lead">
-        This is a space where I cultivate ideas, document projects, share
-        photography, and collect things I find interesting. Like a garden, some
-        thoughts are just seeds 🌱, others are growing 🌿, and some will eventually
-        mature into evergreen content 🌳.
+        Human-centered thinker working in UK civil service.
       </p>
     </section>
 
-    <section class="about">
-      <h2>About Me</h2>
-      <p>
-        I'm a product manager by trade, with over 12 years experience working in digital delivery with roles spanning project management, user experience, design thinking and product management. I'm particularly passionate about tech for good, frontier technologies and AI. Outside of work, my interests span: photography (mainly travel and astro), 3D printing, software development, and board gaming.
+    <section class="content-section">
+      <h2>My digital garden</h2>
+      <p class="section-description">
+        This is a space where I cultivate ideas, document projects, and collect things I find interesting. 
+        <br/>
+        Some thoughts are just seeds, others are growing, and some mature into evergreen content.
       </p>
-    </section>
 
-    <section class="recent">
-      <h2>Recently Updated</h2>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">
+          All ({collectionCounts.all})
+        </button>
+        {collectionCounts.notes > 0 && (
+          <button class="filter-btn" data-filter="notes">
+            Notes ({collectionCounts.notes})
+          </button>
+        )}
+        {collectionCounts.projects > 0 && (
+          <button class="filter-btn" data-filter="projects">
+            Projects ({collectionCounts.projects})
+          </button>
+        )}
+        {collectionCounts.essays > 0 && (
+          <button class="filter-btn" data-filter="essays">
+            Essays ({collectionCounts.essays})
+          </button>
+        )}
+        {collectionCounts.resources > 0 && (
+          <button class="filter-btn" data-filter="resources">
+            Resources ({collectionCounts.resources})
+          </button>
+        )}
+      </div>
+
       {
-        recentContent.length > 0 ? (
+        publishedContent.length > 0 ? (
           <ul class="content-list">
-            {recentContent.map((entry) => {
-              const collection = entry.collection;
-              const slug = entry.slug;
-              return (
-                <li>
-                  <a href={`/${collection}/${slug}`}>
-                    <div class="content-item">
-                      <div class="content-header">
-                        <span class="content-title">{entry.data.title}</span>
-                        <GrowthBadge growth={entry.data.growth} />
-                      </div>
-                      <div class="content-meta">
-                        <span class="content-type">{getCollectionDisplayName(collection)}</span>
-                        <span class="separator">·</span>
-                        <span class="content-date">
-                          {entry.data.updated.toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        </span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              );
-            })}
+            {publishedContent.map((entry) => (
+              <ContentListItem
+                href={`/${entry.collection}/${entry.slug}`}
+                title={entry.data.title}
+                growth={entry.data.growth}
+                date={entry.data.updated}
+                additionalMeta={getCollectionDisplayName(entry.collection)}
+                collection={entry.collection}
+              />
+            ))}
           </ul>
         ) : (
           <p class="text-muted">No content yet. Start creating!</p>
@@ -91,9 +102,35 @@ function getCollectionDisplayName(collection: string): string {
   </div>
 </BaseLayout>
 
+<script>
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const contentItems = document.querySelectorAll('.content-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      // Update active state
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Filter content
+      contentItems.forEach(item => {
+        const collection = item.getAttribute('data-collection');
+        if (filter === 'all' || collection === filter) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
 <style>
-  .home {
-    max-width: var(--measure-wide);
+  .garden {
+    max-width: 100%;
   }
 
   .hero {
@@ -103,22 +140,67 @@ function getCollectionDisplayName(collection: string): string {
   .hero h1 {
     margin-top: 0;
     margin-bottom: var(--space-5);
+    font-size: clamp(3rem, 5vw + 1rem, 4.5rem);
+  }
+
+  .hero h1 strong {
+    font-weight: 700;
   }
 
   .lead {
-    font-size: var(--text-lg);
+    font-size: var(--text-2xl);
+    font-weight: 300;
     line-height: var(--leading-relaxed);
     color: var(--color-text-muted);
     max-width: var(--measure);
   }
 
-  section {
+  .content-section {
     margin-bottom: var(--space-10);
   }
 
-  section h2 {
+  .content-section h2 {
     margin-top: 0;
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-4);
+  }
+
+  .section-description {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-muted);
+    max-width: var(--measure);
+    margin-bottom: var(--space-8);
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .filter-btn {
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-size: var(--text-base);
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .filter-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .filter-btn.active {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: white;
   }
 
   .content-list {
@@ -127,67 +209,18 @@ function getCollectionDisplayName(collection: string): string {
     padding: 0;
   }
 
-  .content-list li {
-    margin: 0 0 var(--space-3) 0;
-  }
+  @media (max-width: 768px) {
+    .lead {
+      font-size: var(--text-xl);
+    }
 
-  .content-list a {
-    display: block;
-    padding: var(--space-3);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    color: var(--color-text);
-    text-decoration: none;
-    transition: border-color var(--transition-base),
-      transform var(--transition-base);
-  }
+    .filter-bar {
+      gap: var(--space-2);
+    }
 
-  .content-list a:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-2px);
-  }
-
-  .content-list a:hover .content-title {
-    color: var(--color-accent);
-  }
-
-  .content-item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-
-  .content-header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .content-title {
-    flex: 1;
-    font-weight: 500;
-    transition: color var(--transition-base);
-  }
-
-  .content-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-  }
-
-  .content-type {
-    text-transform: capitalize;
-    font-weight: 500;
-  }
-
-  .separator {
-    opacity: 0.5;
-  }
-
-  .content-date {
-    white-space: nowrap;
+    .filter-btn {
+      font-size: var(--text-sm);
+      padding: var(--space-2) var(--space-3);
+    }
   }
 </style>

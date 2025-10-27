@@ -1,5 +1,10 @@
 @import './tokens.css';
 
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* CSS Reset & Base Styles */
 
 *,

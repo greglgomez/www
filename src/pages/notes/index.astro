@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import GrowthBadge from '../../components/GrowthBadge.astro';
+import ContentListItem from '../../components/ContentListItem.astro';
 
 const notes = await getCollection('notes');
 const sortedNotes = notes
@@ -22,33 +22,13 @@ const sortedNotes = notes
       sortedNotes.length > 0 ? (
         <ul class="content-list">
           {sortedNotes.map((note) => (
-            <li>
-              <a href={`/notes/${note.slug}`}>
-                <div class="content-item">
-                  <div class="content-header">
-                    <h2 class="content-title">{note.data.title}</h2>
-                    <GrowthBadge growth={note.data.growth} />
-                  </div>
-                  <div class="content-meta">
-                    <time datetime={note.data.updated.toISOString()}>
-                      {note.data.updated.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </time>
-                    {note.data.topics && note.data.topics.length > 0 && (
-                      <>
-                        <span class="separator">·</span>
-                        <span class="topics">
-                          {note.data.topics.slice(0, 3).join(', ')}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </a>
-            </li>
+            <ContentListItem
+              href={`/notes/${note.slug}`}
+              title={note.data.title}
+              growth={note.data.growth}
+              date={note.data.updated}
+              additionalMeta={note.data.topics && note.data.topics.length > 0 ? note.data.topics.slice(0, 3).join(', ') : undefined}
+            />
           ))}
         </ul>
       ) : (
@@ -87,61 +67,6 @@ const sortedNotes = notes
     list-style: none;
     margin: 0;
     padding: 0;
-  }
-
-  .content-list li {
-    margin: 0 0 var(--space-4) 0;
-  }
-
-  .content-list a {
-    display: block;
-    padding: var(--space-4);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    color: var(--color-text);
-    text-decoration: none;
-    transition: border-color var(--transition-base),
-      transform var(--transition-base);
-  }
-
-  .content-list a:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-2px);
-  }
-
-  .content-header {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-3);
-    margin-bottom: var(--space-2);
-  }
-
-  .content-title {
-    flex: 1;
-    font-size: var(--text-xl);
-    margin: 0;
-    transition: color var(--transition-base);
-  }
-
-  .content-list a:hover .content-title {
-    color: var(--color-accent);
-  }
-
-  .content-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-  }
-
-  .separator {
-    opacity: 0.5;
-  }
-
-  .topics {
-    text-transform: capitalize;
   }
 
   .empty-state {

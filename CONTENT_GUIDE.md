@@ -44,83 +44,50 @@ links:
 Project description and details...
 ```
 
-### Journals
-**Location**: `src/content/journals/`
-**Purpose**: Development diaries, progress logs
+### Essays
+**Location**: `src/content/essays/`
+**Purpose**: Long-form writing, opinion pieces, deep dives
 
 ```markdown
 ---
-title: 'Night Sight Development - Week 1'
+title: 'Thoughts on Digital Gardens'
 created: 2025-10-24
 updated: 2025-10-24
 growth: 'budding'
-topics: [development, night-sight]
-type: 'journal'
-project: 'night-sight'
-entry: 1
+topics: [digital-gardens, writing]
+type: 'essay'
 ---
 
-What I worked on this week...
+Your essay content here...
+
+## Introduction
+
+Main thoughts and thesis...
+
+## Main Points
+
+Arguments and ideas...
 ```
 
-### Photography
-**Location**: `src/content/photography/`
-**Purpose**: Photo essays, galleries
+### Resources
+**Location**: `src/content/resources/`
+**Purpose**: Curated lists, bookmarks, tool collections
 
 ```markdown
 ---
-title: 'Iceland Adventure 2025'
+title: 'Favorite Development Tools'
 created: 2025-10-24
 updated: 2025-10-24
 growth: 'evergreen'
-topics: [photography, travel]
-type: 'photo-essay'
-category: 'travel'  # or 'astro' or 'general'
-coverImage: '/images/iceland/cover.jpg'
-location: 'Reykjavik, Iceland'
+topics: [development, tools]
+type: 'resource'
 ---
 
-Story about your photos...
+My favorite development tools and resources...
 
-## Gallery
+## Editors
 
-import Gallery from '../../components/Gallery.astro';
-
-<Gallery
-  photos={[
-    {
-      src: '/images/iceland/photo1.jpg',
-      alt: 'Northern lights over glacier',
-      caption: 'Jökulsárlón at midnight'
-    },
-    {
-      src: '/images/iceland/photo2.jpg',
-      alt: 'Waterfall in sunlight'
-    }
-  ]}
-  columns={3}
-/>
-```
-
-### Collections
-**Location**: `src/content/collections/`
-**Purpose**: Curated lists, bookmarks, resources
-
-```markdown
----
-title: 'Photography Gear I Love'
-created: 2025-10-24
-updated: 2025-10-24
-growth: 'evergreen'
-topics: [photography, gear]
-type: 'collection'
----
-
-My favorite photography equipment...
-
-## Cameras
-
-- Sony A7IV - [[my-camera-setup]]
+- VSCode - [[my-editor-setup]]
 - ...
 ```
 
@@ -143,12 +110,8 @@ My favorite photography equipment...
 |-------|------|---------------|-------------|
 | `featured` | boolean | All | Show on homepage |
 | `draft` | boolean | All | Hide from public |
-| `category` | string | projects, photography | Sub-category |
+| `category` | string | projects | Sub-category |
 | `links` | array | projects | External links |
-| `project` | string | journals | Associated project name |
-| `entry` | number | journals | Entry number |
-| `coverImage` | string | photography | Cover image path |
-| `location` | string | photography | Photo location |
 
 ## Growth Stages Explained
 
@@ -202,7 +165,7 @@ Check out the [[night-sight]] project.
 Just add them to the `topics` array:
 
 ```yaml
-topics: [photography, travel, iceland, astro-photography]
+topics: [development, typescript, web-development]
 ```
 
 ### Topic Naming
@@ -213,49 +176,9 @@ topics: [photography, travel, iceland, astro-photography]
 
 ### Common Topics
 - Content type: `note`, `tutorial`, `guide`
-- Domain: `photography`, `development`, `product-management`
+- Domain: `development`, `product-management`, `design`
 - Technology: `astro`, `typescript`, `3d-printing`
 - Status: `work-in-progress`, `archived`
-
-## Photo Galleries
-
-### Adding Photos
-
-1. **Save images** to `public/images/[folder]/`
-   ```
-   public/
-     images/
-       iceland/
-         photo1.jpg
-         photo2.jpg
-   ```
-
-2. **Use Gallery component** in your content:
-   ```markdown
-   import Gallery from '../../components/Gallery.astro';
-
-   <Gallery
-     photos={[
-       {
-         src: '/images/iceland/photo1.jpg',
-         alt: 'Description for accessibility',
-         caption: 'Optional caption'
-       }
-     ]}
-     columns={3}
-   />
-   ```
-
-### Gallery Options
-- `columns`: Number of columns (2, 3, or 4)
-- Each photo needs `src` and `alt`
-- `caption` is optional
-
-### Photo Optimization Tips
-- Use JPG for photos (good compression)
-- Aim for 1920px wide max
-- Compress before uploading (tools: ImageOptim, TinyPNG)
-- Keep file sizes under 500KB when possible
 
 ## Workflow Tips
 
@@ -350,7 +273,7 @@ code blocks for longer snippets
 - Try lowercase version
 - Verify file exists in correct collection
 
-### Photos Not Showing?
+### Images Not Showing?
 - Ensure path starts with `/`
 - Check file is in `public/images/`
 - Verify filename is correct (case-sensitive)
@@ -365,9 +288,8 @@ code blocks for longer snippets
 
 1. Create your first note in `src/content/notes/`
 2. Add some wikilinks to connect ideas
-3. Upload photos to `public/images/`
-4. Create a photo essay
-5. Document a project
-6. Start a development journal
+3. Document a project
+4. Write an essay
+5. Curate resource collections
 
 Remember: Your digital garden grows over time. Start small, iterate, and enjoy the process!

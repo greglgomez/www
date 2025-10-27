@@ -5,9 +5,7 @@ updated: 2025-10-26
 growth: seedling
 topics:
   - web
-type: journal
-project: "[[night-sight]]"
-entry: 1
+type: essay
 ---
 
 ## What I worked on
