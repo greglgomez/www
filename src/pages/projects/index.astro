@@ -14,8 +14,7 @@ const sortedProjects = projects
     <header class="page-header">
       <h1>Projects</h1>
       <p class="page-description">
-        Things I've built, designed, and worked on across development, 3D
-        printing, and product management.
+        Things I've built, designed, and worked on.
       </p>
     </header>
 
@@ -31,8 +30,6 @@ const sortedProjects = projects
                     <GrowthBadge growth={project.data.growth} />
                   </div>
                   <div class="content-meta">
-                    <span class="category">{project.data.category}</span>
-                    <span class="separator">·</span>
                     <time datetime={project.data.updated.toISOString()}>
                       {project.data.updated.toLocaleDateString('en-US', {
                         year: 'numeric',

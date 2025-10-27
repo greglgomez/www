@@ -37,7 +37,7 @@ const sortedNotes = notes
                         day: 'numeric',
                       })}
                     </time>
-                    {note.data.topics.length > 0 && (
+                    {note.data.topics && note.data.topics.length > 0 && (
                       <>
                         <span class="separator">·</span>
                         <span class="topics">

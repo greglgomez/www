@@ -31,14 +31,6 @@ const sortedPhotography = photography
                     <GrowthBadge growth={photo.data.growth} />
                   </div>
                   <div class="content-meta">
-                    <span class="category">{photo.data.category}</span>
-                    {photo.data.location && (
-                      <>
-                        <span class="separator">·</span>
-                        <span class="location">{photo.data.location}</span>
-                      </>
-                    )}
-                    <span class="separator">·</span>
                     <time datetime={photo.data.updated.toISOString()}>
                       {photo.data.updated.toLocaleDateString('en-US', {
                         year: 'numeric',

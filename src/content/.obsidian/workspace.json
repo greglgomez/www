@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/welcome.md",
+                "file": "collections/public-sector-product-links.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "welcome"
+              "title": "public-sector-product-links"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/welcome.md",
+                "file": "collections/public-sector-product-links.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for welcome"
+              "title": "Backlinks for public-sector-product-links"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/welcome.md",
+                "file": "collections/public-sector-product-links.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from welcome"
+              "title": "Outgoing links from public-sector-product-links"
             }
           },
           {
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/welcome.md",
+                "file": "collections/public-sector-product-links.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of welcome"
+              "title": "Outline of public-sector-product-links"
             }
           }
         ]
@@ -171,8 +171,27 @@
   },
   "active": "718da7aa1fab3041",
   "lastOpenFiles": [
-    "notes/digital-gardens.md",
+    "photography/funghi-photos.md",
+    "photography/funghi-photos.mdx",
+    "photography/funghi.md",
+    "collections/public-sector-product-links.md",
+    "notes/product-ramblings-backlog.md",
+    "journals/hello-world.md",
+    "templates/collection.md",
+    "templates/journal.md",
+    "templates/note.md",
+    "templates/project.md",
+    "templates/collection-simple.md",
+    "templates/photo-simple.md",
+    "templates/journal-simple.md",
+    "templates/project-simple.md",
+    "templates/note-simple.md",
+    "projects/night-sight.md",
     "projects/digital-garden.md",
-    "notes/welcome.md"
+    "templates/photo-essay.md",
+    "templates/README.md",
+    "templates",
+    "notes/welcome.md",
+    "notes/digital-gardens.md"
   ]
 }

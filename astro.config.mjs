@@ -5,7 +5,7 @@ import { remarkWikilinks } from './src/lib/remark-wikilinks.ts';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://greglgomez.com',
+  site: 'https://www.greglgomez.com',
   integrations: [mdx()],
   markdown: {
     remarkPlugins: [remarkWikilinks],

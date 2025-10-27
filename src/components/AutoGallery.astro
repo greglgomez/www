@@ -1,0 +1,89 @@
+---
+import Gallery from './Gallery.astro';
+import fs from 'fs';
+import path from 'path';
+
+interface Props {
+  folder: string; // e.g., 'funghi' for /public/images/funghi/
+  columns?: number;
+  altPrefix?: string; // Default alt text prefix, e.g., "Funghi photograph"
+}
+
+const { folder, columns = 3, altPrefix = 'Photograph' } = Astro.props;
+
+// Read images from the public directory at build time
+const publicDir = path.join(process.cwd(), 'public', 'images', folder);
+let photos: Array<{ src: string; alt: string; caption?: string }> = [];
+
+try {
+  // Check if directory exists
+  if (fs.existsSync(publicDir)) {
+    const files = fs.readdirSync(publicDir);
+
+    // Filter for image files and sort
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+    photos = files
+      .filter((file) => {
+        const ext = path.extname(file).toLowerCase();
+        return imageExtensions.includes(ext);
+      })
+      .sort() // Alphabetical order (or numeric if you prefix with 001-, 002-, etc.)
+      .map((file) => {
+        // Extract filename without extension for alt text
+        const filename = file.replace(/\.\w+$/, '');
+        // Convert to readable format: "001-red-mushroom" -> "Red mushroom"
+        const readableName = filename
+          .replace(/^\d+-/, '') // Remove leading numbers
+          .replace(/_/g, ' ') // Replace underscores with spaces
+          .replace(/-/g, ' ') // Replace hyphens with spaces
+          .replace(/\b\w/g, (c) => c.toUpperCase()); // Capitalize words
+
+        return {
+          src: `/images/${folder}/${file}`,
+          alt: `${altPrefix}: ${readableName}`,
+          caption: readableName, // Use filename as caption (optional)
+        };
+      });
+  }
+} catch (error) {
+  console.error(`Error reading images from /public/images/${folder}/:`, error);
+}
+---
+
+{
+  photos.length === 0 ? (
+    <div class="no-images">
+      <p>No images found in /images/{folder}/</p>
+      <p class="hint">
+        Place images in <code>/public/images/{folder}/</code> to display them
+        here.
+      </p>
+    </div>
+  ) : (
+    <Gallery photos={photos} columns={columns} />
+  )
+}
+
+<style>
+  .no-images {
+    padding: var(--space-6);
+    background: var(--color-surface-secondary);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+
+  .hint {
+    font-size: var(--text-sm);
+    margin-top: var(--space-2);
+  }
+
+  code {
+    background: var(--color-surface-tertiary);
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+</style>

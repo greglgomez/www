@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { getCollectionCounts } from '../lib/collection-counts';
+import GrowthBadge from '../components/GrowthBadge.astro';
 
 // Get recent content
 const allContent = await Promise.all([
@@ -18,47 +18,17 @@ const recentContent = allContent
   .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime())
   .slice(0, 5);
 
-// Get collection counts for conditional rendering
-const counts = await getCollectionCounts();
-
-// Define all explore cards
-const allExploreCards = [
-  {
-    title: 'Notes',
-    href: '/notes',
-    description: 'Thoughts and ideas at various stages of development',
-    collection: 'notes' as const,
-  },
-  {
-    title: 'Projects',
-    href: '/projects',
-    description: "Portfolio of things I've built and designed",
-    collection: 'projects' as const,
-  },
-  {
-    title: 'Journals',
-    href: '/journals',
-    description: 'Development diaries and project logs',
-    collection: 'journals' as const,
-  },
-  {
-    title: 'Photography',
-    href: '/photography',
-    description: 'Photo essays and galleries from my travels',
-    collection: 'photography' as const,
-  },
-  {
-    title: 'Collections',
-    href: '/collections',
-    description: 'Curated lists and links on topics I care about',
-    collection: 'collections' as const,
-  },
-];
-
-// Filter to only show cards for collections with content
-const visibleExploreCards = allExploreCards.filter(
-  (card) => counts[card.collection] > 0
-);
+// Helper function to get collection display name
+function getCollectionDisplayName(collection: string): string {
+  const names: Record<string, string> = {
+    notes: 'Note',
+    projects: 'Project',
+    journals: 'Journal',
+    photography: 'Photo Essay',
+    collections: 'Collection',
+  };
+  return names[collection] || collection;
+}
 ---
 
 <BaseLayout title="Home">
@@ -74,9 +44,9 @@ const visibleExploreCards = allExploreCards.filter(
     </section>
 
     <section class="about">
-      <h2>About</h2>
+      <h2>About Me</h2>
       <p>
-        I'm a product manager by trade, with over 12 years experience working in digital delivery with roles spanning Project Management, User Experience Design, Design Thinking and Product Management. Outside of work, my interests span: photography (mainly travel and astro), 3D printing, software development, and board gaming.
+        I'm a product manager by trade, with over 12 years experience working in digital delivery with roles spanning project management, user experience, design thinking and product management. I'm particularly passionate about tech for good, frontier technologies and AI. Outside of work, my interests span: photography (mainly travel and astro), 3D printing, software development, and board gaming.
       </p>
     </section>
 
@@ -91,14 +61,23 @@ const visibleExploreCards = allExploreCards.filter(
               return (
                 <li>
                   <a href={`/${collection}/${slug}`}>
-                    <span class="content-title">{entry.data.title}</span>
-                    <span class="content-date">
-                      {entry.data.updated.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </span>
+                    <div class="content-item">
+                      <div class="content-header">
+                        <span class="content-title">{entry.data.title}</span>
+                        <GrowthBadge growth={entry.data.growth} />
+                      </div>
+                      <div class="content-meta">
+                        <span class="content-type">{getCollectionDisplayName(collection)}</span>
+                        <span class="separator">·</span>
+                        <span class="content-date">
+                          {entry.data.updated.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </span>
+                      </div>
+                    </div>
                   </a>
                 </li>
               );
@@ -109,22 +88,6 @@ const visibleExploreCards = allExploreCards.filter(
         )
       }
     </section>
-
-    {
-      visibleExploreCards.length > 0 && (
-        <section class="explore">
-          <h2>Explore</h2>
-          <div class="explore-grid">
-            {visibleExploreCards.map((card) => (
-              <a href={card.href} class="explore-card">
-                <h3>{card.title}</h3>
-                <p>{card.description}</p>
-              </a>
-            ))}
-          </div>
-        </section>
-      )
-    }
   </div>
 </BaseLayout>
 
@@ -165,69 +128,66 @@ const visibleExploreCards = allExploreCards.filter(
   }
 
   .content-list li {
-    margin: 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .content-list li:last-child {
-    border-bottom: none;
+    margin: 0 0 var(--space-3) 0;
   }
 
   .content-list a {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: var(--space-3) 0;
+    display: block;
+    padding: var(--space-3);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     color: var(--color-text);
     text-decoration: none;
-    gap: var(--space-4);
+    transition: border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .content-list a:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
   }
 
   .content-list a:hover .content-title {
     color: var(--color-accent);
   }
 
+  .content-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .content-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
   .content-title {
     flex: 1;
+    font-weight: 500;
     transition: color var(--transition-base);
   }
 
+  .content-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .content-type {
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+
+  .separator {
+    opacity: 0.5;
+  }
+
   .content-date {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
     white-space: nowrap;
-  }
-
-  .explore-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--space-4);
-  }
-
-  .explore-card {
-    padding: var(--space-5);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    text-decoration: none;
-    transition: border-color var(--transition-base),
-      transform var(--transition-base);
-  }
-
-  .explore-card:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-2px);
-  }
-
-  .explore-card h3 {
-    margin-top: 0;
-    margin-bottom: var(--space-2);
-    font-size: var(--text-lg);
-  }
-
-  .explore-card p {
-    margin: 0;
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
   }
 </style>

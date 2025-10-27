@@ -30,8 +30,6 @@ const sortedJournals = journals
                     <GrowthBadge growth={journal.data.growth} />
                   </div>
                   <div class="content-meta">
-                    <span class="project">{journal.data.project}</span>
-                    <span class="separator">·</span>
                     <time datetime={journal.data.updated.toISOString()}>
                       {journal.data.updated.toLocaleDateString('en-US', {
                         year: 'numeric',
