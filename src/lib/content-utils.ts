@@ -61,6 +61,9 @@ export async function getBacklinks(slug: string): Promise<ContentEntry[]> {
     // Render the content to get the raw markdown
     const { body } = entry;
 
+    // Skip entries without body content
+    if (!body) continue;
+
     // Check if this entry contains a wikilink to our slug
     const wikilinkRegex = /\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
     const matches = [...body.matchAll(wikilinkRegex)];

@@ -4,18 +4,18 @@ import ContentLayout from '../../layouts/ContentLayout.astro';
 import Backlinks from '../../components/Backlinks.astro';
 
 export async function getStaticPaths() {
-  const collections = await getCollection('collections');
-  return collections.map((collection) => ({
-    params: { slug: collection.slug },
-    props: { collection },
+  const resources = await getCollection('resources');
+  return resources.map((resource) => ({
+    params: { slug: resource.slug },
+    props: { resource },
   }));
 }
 
-const { collection } = Astro.props;
-const { Content } = await collection.render();
+const { resource } = Astro.props;
+const { Content } = await resource.render();
 ---
 
-<ContentLayout entry={collection}>
+<ContentLayout entry={resource}>
   <Content />
-  <Backlinks slug={collection.slug} />
+  <Backlinks slug={resource.slug} />
 </ContentLayout>

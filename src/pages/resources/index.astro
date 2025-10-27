@@ -3,37 +3,37 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import ContentListItem from '../../components/ContentListItem.astro';
 
-const collections = await getCollection('collections');
-const sortedCollections = collections
-  .filter((collection) => !collection.data.draft)
+const resources = await getCollection('resources');
+const sortedResources = resources
+  .filter((resource) => !resource.data.draft)
   .sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime());
 ---
 
-<BaseLayout title="Collections">
+<BaseLayout title="Resources">
   <div class="page">
     <header class="page-header">
-      <h1>Collections</h1>
+      <h1>Resources</h1>
       <p class="page-description">
         Curated lists, bookmarks, and resources on topics I find interesting.
       </p>
     </header>
 
     {
-      sortedCollections.length > 0 ? (
+      sortedResources.length > 0 ? (
         <ul class="content-list">
-          {sortedCollections.map((collection) => (
+          {sortedResources.map((resource) => (
             <ContentListItem
-              href={`/collections/${collection.slug}`}
-              title={collection.data.title}
-              growth={collection.data.growth}
-              date={collection.data.updated}
+              href={`/resources/${resource.slug}`}
+              title={resource.data.title}
+              growth={resource.data.growth}
+              date={resource.data.updated}
             />
           ))}
         </ul>
       ) : (
         <p class="empty-state">
-          No collections yet. Create your first in{' '}
-          <code>src/content/collections/</code>
+          No resources yet. Create your first in{' '}
+          <code>src/content/resources/</code>
         </p>
       )
     }

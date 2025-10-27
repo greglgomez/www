@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/product-ramblings-backlog.md",
+                "file": "resources/public-sector-product-links.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "product-ramblings-backlog"
+              "title": "public-sector-product-links"
             }
           }
         ]
@@ -94,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "resources/public-sector-product-links.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for public-sector-product-links"
             }
           },
           {
@@ -112,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "resources/public-sector-product-links.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links"
+              "title": "Outgoing links from public-sector-product-links"
             }
           },
           {
@@ -140,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "collections/public-sector-product-links.md",
+                "file": "resources/public-sector-product-links.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -167,24 +169,27 @@
       "bases:Create new base": false
     }
   },
-  "active": "4f5fe1c07eca62ee",
+  "active": "718da7aa1fab3041",
   "lastOpenFiles": [
     "templates/resource.md",
+    "templates/README.md",
+    "templates/project.md",
+    "templates/note.md",
     "templates/essay.md",
+    "templates",
+    "resources/Other resources.md",
     "resources/public-sector-product-links.md",
+    "notes/product-ramblings-backlog.md",
+    "collections/public-sector-product-links.md",
     "resources",
     "essays/hello-world.md",
     "essays",
     "photography/funghi-photos.md",
     "photography/funghi-photos.mdx",
     "photography/funghi.md",
-    "collections/public-sector-product-links.md",
-    "notes/product-ramblings-backlog.md",
     "journals/hello-world.md",
     "templates/collection.md",
     "templates/journal.md",
-    "templates/note.md",
-    "templates/project.md",
     "templates/collection-simple.md",
     "templates/photo-simple.md",
     "templates/journal-simple.md",
@@ -193,8 +198,6 @@
     "projects/night-sight.md",
     "projects/digital-garden.md",
     "templates/photo-essay.md",
-    "templates/README.md",
-    "templates",
     "notes/welcome.md",
     "notes/digital-gardens.md"
   ]

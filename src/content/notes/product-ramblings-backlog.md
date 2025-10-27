@@ -1,5 +1,5 @@
 ---
-title: Product Ramblings Backlog
+title: My backlog of things to write about
 created: 2025-10-26
 updated: 2025-10-26
 growth: seedling
