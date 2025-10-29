@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/product-ramblings-backlog.md",
+                "file": "notes/space-apps-hackathon.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "product-ramblings-backlog"
+              "title": "space-apps-hackathon"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "42bd6d7210cf8337",
@@ -171,15 +172,16 @@
   },
   "active": "718da7aa1fab3041",
   "lastOpenFiles": [
-    "resources/public-sector-product-links.md",
+    "templates/note.md",
     "templates/resource.md",
     "templates/README.md",
     "templates/project.md",
-    "templates/note.md",
     "templates/essay.md",
+    "notes/space-apps-hackathon.md",
+    "notes/product-ramblings-backlog.md",
+    "resources/public-sector-product-links.md",
     "templates",
     "resources/Other resources.md",
-    "notes/product-ramblings-backlog.md",
     "collections/public-sector-product-links.md",
     "resources",
     "essays/hello-world.md",

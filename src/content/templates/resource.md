@@ -5,9 +5,6 @@ updated: {{date:YYYY-MM-DD}}
 growth: budding
 type: resource
 ---
-
-# {{title}}
-
 Description of this curated resource collection...
 
 ## Resources

@@ -24,6 +24,7 @@ I think there's a few things to talk about here:
 - *"How to influence upward when strategy is unclear"*
 - *"Strategic thinking skills for individual contributors"*
 - *"Bottom-up product strategy"*
+- *"The only steer from above is specific things to build"*
 
 ## The art of subtly making organisation more product minded
 Another pain point I've identified in working on developing product maturity in an organisation is whilst you may have some support for your body of work to mature product practice, support and understanding of that effort won't be homogenous in the organisation.
