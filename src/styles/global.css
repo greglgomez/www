@@ -142,6 +142,53 @@ blockquote {
   font-style: italic;
 }
 
+/* Sidenotes */
+
+aside[data-callout='sidenote'] {
+  --sidenote-width: clamp(12rem, 22vw, 18rem);
+  position: relative;
+  float: right;
+  clear: right;
+  width: var(--sidenote-width);
+  margin: var(--space-4) calc(-1 * (var(--sidenote-width) + var(--space-6))) var(--space-4)
+    var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+  font-style: normal;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--color-border) 40%, transparent);
+}
+
+aside[data-callout='sidenote'] p {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: 0;
+  margin-bottom: var(--space-2);
+  align-items: baseline;
+}
+
+aside[data-callout='sidenote'] p:last-child {
+  margin-bottom: 0;
+}
+
+aside[data-callout='sidenote'] sup {
+  font-size: 0.75em;
+  line-height: 1;
+}
+
+@media (max-width: 1200px) {
+  aside[data-callout='sidenote'] {
+    float: none;
+    width: auto;
+    margin: var(--space-5) 0;
+    padding: var(--space-4);
+  }
+}
+
 /* Horizontal Rules */
 
 hr {

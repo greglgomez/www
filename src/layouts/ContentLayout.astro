@@ -54,17 +54,13 @@ const showUpdated = created.getTime() !== updated.getTime();
       </div>
     </header>
 
-    <div class="content-body prose prose-lg lg:prose-xl dark:prose-invert max-w-none">
+    <div class="content-body prose prose-lg lg:prose-xl dark:prose-invert">
       <slot />
     </div>
   </article>
 </BaseLayout>
 
 <style>
-  .content {
-    max-width: var(--measure-wide);
-  }
-
   .content-header {
     margin-bottom: var(--space-8);
     padding-bottom: var(--space-6);

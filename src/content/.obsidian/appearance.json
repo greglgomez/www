@@ -1,5 +1,10 @@
 {
-  "cssTheme": "Serif",
+  "cssTheme": "",
   "accentColor": "#8547c2",
-  "baseFontSize": 18
+  "baseFontSize": 18,
+  "enabledCssSnippets": [
+    "Sidenote Auto-Adjust Module",
+    "Sidenote in Tufte-style using Sidenote-Auto-Adjust-Module",
+    "Stickynote in Callout-style using Sidenote-Auto-Adjust-Module"
+  ]
 }
